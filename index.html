@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101818">
+  <meta name="description" content="劉冠宏的故事：從雲林出發，在醫學、球場與城市之間，慢慢找到自己的節奏。">
+  <title>往北一點，往自己近一點｜劉冠宏</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* 全站先定義色票與字體，讓後續區塊可以用一致的設計語言。 */
+    :root {
+      color-scheme: light;
+      --ink: #101818;
+      --paper: #f3f0e7;
+      --lime: #d7ed69;
+      --coral: #e87558;
+      --teal: #7bc2b5;
+      --display: "Barlow Condensed", "Noto Sans TC", sans-serif;
+      --body: "Noto Sans TC", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-snap-type: y mandatory; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--ink);
+      color: var(--ink);
+      font-family: var(--body);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--coral); outline-offset: 5px; }
+
+    /* 固定導覽列讓長篇分鏡仍可快速跳到各段；窄螢幕改用可操作的漢堡按鈕。 */
+    .site-header {
+      position: fixed;
+      z-index: 20;
+      inset: 0 0 auto;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 5vw, 72px);
+      color: #fff;
+      transition: background-color .3s ease, color .3s ease;
+    }
+    .site-header.scrolled {
+      color: var(--ink);
+      background: rgb(243 240 231 / 92%);
+      backdrop-filter: blur(14px);
+    }
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0;
+    }
+    .wordmark-mark {
+      width: 28px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      font-family: var(--display);
+      font-size: 17px;
+      line-height: 1;
+    }
+    .nav-links { display: flex; align-items: center; gap: clamp(18px, 3vw, 42px); }
+    .nav-links a {
+      padding: 9px 2px;
+      color: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      opacity: .84;
+      transition: opacity .2s ease;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      padding: 11px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      display: block;
+      height: 1px;
+      margin: 4px 0;
+      background: currentColor;
+      transition: transform .2s ease;
+    }
+    .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(2.5px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-2.5px) rotate(-45deg); }
+
+    /* 每個 panel 至少佔滿一個視窗並對齊捲動位置，建立沉浸式章節節奏。 */
+    .panel {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      min-height: 100vh;
+      min-height: 100svh;
+      align-items: center;
+      overflow: hidden;
+      padding: 112px clamp(24px, 8vw, 124px) 64px;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    .panel-inner { position: relative; z-index: 2; width: min(100%, 1180px); margin-inline: auto; }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { width: 30px; height: 1px; background: currentColor; content: ""; }
+    h1, h2, p { margin-top: 0; }
+    h1, h2 { font-family: var(--display); font-weight: 700; letter-spacing: 0; }
+    .display-title {
+      max-width: 850px;
+      margin-bottom: 20px;
+      font-size: clamp(52px, 9.5vw, 132px);
+      line-height: .96;
+    }
+    .display-title .accent { color: var(--lime); }
+    .lede { max-width: 500px; margin-bottom: 34px; font-size: clamp(15px, 1.5vw, 18px); line-height: 1.9; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .button {
+      display: inline-flex;
+      min-width: 178px;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: var(--lime);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform .2s ease, background-color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: #e4f594; }
+    .button.secondary { border-color: rgb(255 255 255 / 54%); background: rgb(255 255 255 / 8%); color: #fff; }
+    .button.secondary:hover { background: rgb(255 255 255 / 18%); }
+    .button .arrow { font-size: 18px; line-height: .8; }
+    .scene-index {
+      position: absolute;
+      z-index: 2;
+      right: clamp(24px, 5vw, 72px);
+      bottom: 34px;
+      color: currentColor;
+      font-family: var(--display);
+      font-size: 13px;
+      opacity: .7;
+    }
+
+    /* 首屏用 CSS 光暈與原創城市剪影代替產品照，讓故事一開始就有明確場景。 */
+    .hero {
+      background:
+        radial-gradient(ellipse at 74% 44%, rgb(123 194 181 / 24%), transparent 31%),
+        linear-gradient(118deg, #101818 5%, #172623 58%, #263b35 100%);
+      color: #fff;
+    }
+    .hero::after {
+      position: absolute;
+      z-index: 1;
+      right: -5vw;
+      bottom: -1px;
+      width: min(72vw, 1000px);
+      height: 69%;
+      background: linear-gradient(0deg, #101818 0%, rgb(16 24 24 / 0%) 100%);
+      content: "";
+      pointer-events: none;
+    }
+    .hero-art {
+      position: absolute;
+      right: -2vw;
+      bottom: -3vh;
+      z-index: 0;
+      width: min(76vw, 1050px);
+      max-height: 82vh;
+      filter: drop-shadow(0 24px 60px rgb(0 0 0 / 24%));
+    }
+    .hero .panel-inner { padding-bottom: 28px; }
+    .hero .lede { color: rgb(255 255 255 / 78%); }
+    .hero-note {
+      position: absolute;
+      right: 7vw;
+      bottom: 14%;
+      z-index: 2;
+      color: rgb(255 255 255 / 82%);
+      font-family: var(--display);
+      font-size: 13px;
+      letter-spacing: .08em;
+      writing-mode: vertical-rl;
+    }
+
+    /* 原鄉篇用暖色地景與地圖式圓弧，視覺化「從雲林出發」而不冒充真實照片。 */
+    .origin { background: var(--paper); color: var(--ink); }
+    .origin .panel-inner { display: grid; grid-template-columns: minmax(0, .9fr) minmax(300px, 1.1fr); align-items: center; gap: 7vw; }
+    .origin h2, .practice h2, .outro h2 { margin-bottom: 22px; font-size: clamp(48px, 7vw, 90px); line-height: .98; }
+    .origin .copy, .practice .copy { max-width: 430px; font-size: 15px; line-height: 2; }
+    .origin-visual { position: relative; min-height: 380px; }
+    .origin-sun {
+      position: absolute;
+      top: 5%;
+      right: 9%;
+      width: min(28vw, 280px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+    .origin-route {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .origin-label {
+      position: absolute;
+      right: 0;
+      bottom: 8%;
+      padding: 12px 16px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* 個性篇以大字與對比色留出呼吸感，呈現內向與幽默可以同時存在。 */
+    .personality { background: var(--lime); color: var(--ink); }
+    .personality .panel-inner { display: grid; grid-template-columns: 1fr minmax(220px, .7fr); align-items: center; gap: 5vw; }
+    .personality .eyebrow { color: #3c4920; }
+    .personality h2 { max-width: 740px; margin-bottom: 25px; font-size: clamp(52px, 8vw, 108px); line-height: .96; }
+    .personality .copy { max-width: 540px; font-size: 16px; line-height: 1.9; }
+    .portrait-frame {
+      width: min(28vw, 320px);
+      min-width: 220px;
+      justify-self: center;
+      padding: 10px 10px 14px;
+      background: var(--paper);
+      box-shadow: 0 18px 48px rgb(16 24 24 / 18%);
+      transform: rotate(2deg);
+    }
+    .portrait-frame img { display: block; width: 100%; height: auto; object-fit: contain; }
+    .portrait-frame figcaption { padding-top: 12px; font-size: 11px; font-weight: 700; }
+
+    /* 日常篇把課業、運動與興趣放在同一畫面，讓個人介紹有具體而親切的細節。 */
+    .practice { background: #dce8e2; color: var(--ink); }
+    .practice .panel-inner { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 6vw; }
+    .practice h2 { max-width: 590px; }
+    .practice .copy { margin-bottom: 27px; }
+    .interest-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .interest-list span { padding: 9px 13px; border: 1px solid rgb(16 24 24 / 35%); border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .practice-art { width: min(100%, 510px); justify-self: end; }
+    .practice-art svg { display: block; width: 100%; height: auto; }
+
+    /* 收尾 CTA 回到主題，不製造假的聯絡資訊或商業服務承諾。 */
+    .outro {
+      min-height: 88vh;
+      min-height: 88svh;
+      background: var(--coral);
+      color: var(--ink);
+    }
+    .outro .panel-inner { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
+    .outro h2 { max-width: 760px; margin-bottom: 18px; font-size: clamp(48px, 8vw, 104px); }
+    .outro .copy { max-width: 480px; margin-bottom: 0; font-size: 15px; line-height: 1.9; }
+    .outro .button { flex: 0 0 auto; background: var(--ink); color: #fff; }
+    .outro .button:hover { background: #273532; }
+    .site-footer {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px clamp(24px, 8vw, 124px);
+      background: var(--ink);
+      color: rgb(255 255 255 / 70%);
+      font-size: 10px;
+    }
+    .site-footer p { margin: 0; }
+
+    /* 進場效果只在使用者未要求減少動態時套用；停用時內容一律直接可見。 */
+    .reveal { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+      .reveal { opacity: 0; transform: translateY(26px); transition: opacity .75s ease, transform .75s ease; }
+      .reveal.show { opacity: 1; transform: none; }
+      .hero-art { animation: settle-in 1.2s ease-out both; }
+      @keyframes settle-in { from { opacity: .55; transform: translateY(18px) scale(1.025); } to { opacity: 1; transform: none; } }
+    }
+
+    /* 平板與手機改為單欄構圖，確保文字與原創插圖不擠在一起。 */
+    @media (max-width: 760px) {
+      .site-header { min-height: 66px; padding-inline: 20px; }
+      .menu-toggle { display: block; }
+      .nav-links {
+        position: absolute;
+        top: calc(100% - 1px);
+        right: 14px;
+        left: 14px;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 16px;
+        border: 1px solid rgb(255 255 255 / 14%);
+        border-radius: 12px;
+        background: #172321;
+        color: #fff;
+      }
+      .scrolled .nav-links { border-color: rgb(16 24 24 / 12%); background: var(--paper); color: var(--ink); }
+      .nav-links.open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 14px 4px; border-bottom: 1px solid rgb(255 255 255 / 12%); font-size: 13px; }
+      .nav-links a:last-child { border-bottom: 0; }
+      .panel { padding: 98px 24px 54px; }
+      .hero-art { right: -32%; bottom: 2%; width: 118%; max-height: 54vh; opacity: .82; }
+      .hero::after { right: -25%; width: 100%; height: 55%; }
+      .hero .panel-inner { align-self: start; padding-top: 10vh; }
+      .hero .display-title { max-width: 620px; font-size: clamp(51px, 15vw, 78px); }
+      .hero .lede { max-width: 340px; font-size: 14px; }
+      .hero-note { right: 7%; bottom: 12%; }
+      .button { min-width: 150px; }
+      .origin .panel-inner, .personality .panel-inner, .practice .panel-inner { grid-template-columns: 1fr; gap: 24px; }
+      .origin .panel-inner { align-content: center; }
+      .origin-visual { min-height: 250px; }
+      .origin-sun { width: min(42vw, 190px); }
+      .personality .panel-inner { align-content: center; }
+      .personality h2 { font-size: clamp(48px, 13vw, 74px); }
+      .portrait-frame { width: min(52vw, 210px); min-width: 0; justify-self: end; margin: 0 12px 4px 0; }
+      .personality .copy { max-width: 100%; font-size: 14px; }
+      .practice .panel-inner { align-content: center; }
+      .practice h2, .origin h2 { font-size: clamp(46px, 12vw, 68px); }
+      .practice-art { width: min(78%, 330px); justify-self: center; }
+      .outro { min-height: 82vh; min-height: 82svh; }
+      .outro .panel-inner { align-items: start; flex-direction: column; justify-content: center; }
+      .outro h2 { font-size: clamp(48px, 13vw, 74px); }
+      .scene-index { bottom: 22px; }
+      .site-footer { align-items: start; flex-direction: column; padding: 20px 24px; }
+    }
+
+    /* 極窄螢幕再縮小留白與裝飾尺寸，避免 375px 以下出現橫向捲軸。 */
+    @media (max-width: 390px) {
+      .panel { padding-inline: 20px; }
+      .hero .display-title { font-size: 49px; }
+      .hero .actions { gap: 8px; }
+      .hero .button { min-width: 136px; padding-inline: 14px; }
+      .personality .copy { max-width: 82%; }
+      .portrait-frame { width: min(50vw, 190px); margin-right: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 導覽列提供章節錨點；按鈕在手機上控制展開狀態並同步無障礙屬性。 -->
+  <header class="site-header" id="top">
+    <a class="wordmark" href="#top" aria-label="劉冠宏故事首頁">
+      <span class="wordmark-mark" aria-hidden="true">劉</span>
+      <span>劉冠宏 / 個人故事</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="開啟導覽選單" aria-expanded="false" aria-controls="site-navigation">
+      <span></span><span></span>
+    </button>
+    <nav class="nav-links" id="site-navigation" aria-label="主要導覽">
+      <a href="#origin">從雲林出發</a>
+      <a href="#personality">我的節奏</a>
+      <a href="#practice">日常切面</a>
+      <a href="#next">下一站</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 第一幕先建立人物與方向，城市剪影是原創 SVG，沒有使用外部產品照片。 -->
+    <section class="panel hero" aria-labelledby="hero-title">
+      <svg class="hero-art" viewBox="0 0 1000 620" role="img" aria-label="夜色中的城市剪影與一條通往遠方的道路" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="city" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#54766b"/><stop offset="1" stop-color="#172522"/></linearGradient>
+          <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#334841"/><stop offset="1" stop-color="#101818"/></linearGradient>
+        </defs>
+        <path d="M0 390 70 345 126 367 184 294 248 353 302 310 368 363 438 274 500 351 567 306 623 353 686 252 744 331 802 286 866 345 928 296 1000 340v280H0Z" fill="#273a34"/>
+        <path d="M70 620V368h86v252m18 0V318h118v302m29 0V358h89v262m38 0V296h132v324m27 0V346h102v274m30 0V273h112v347m31 0V326h112v294" fill="url(#city)"/>
+        <g fill="#d7ed69" opacity=".8"><path d="M96 393h10v20H96zm31 0h10v20h-10zm62-41h10v19h-10zm36 0h10v19h-10zm19 42h10v19h-10zm117-15h10v19h-10zm36-57h10v19h-10zm37 0h10v19h-10zm62 39h10v19h-10zm145-31h10v19h-10zm41 0h10v19h-10zm41-42h10v19h-10zm45 69h10v19h-10zm85-27h10v19h-10z"/></g>
+        <path d="M378 620 466 407h80l126 213Z" fill="url(#road)"/>
+        <path d="m497 620 26-179h9l35 179Z" fill="#d7ed69" opacity=".88"/>
+        <path d="M0 590h1000v30H0Z" fill="#101818"/>
+      </svg>
+      <div class="panel-inner reveal">
+        <p class="eyebrow">A story by Kuan-Hung Liu</p>
+        <h1 class="display-title" id="hero-title">往北一點，<br>往<span class="accent">自己</span>近一點。</h1>
+        <p class="lede">從雲林出發，帶著南方的陽光、安靜的個性，和一點想認識新朋友的期待。</p>
+        <div class="actions">
+          <a class="button" href="#origin">走進我的故事 <span class="arrow" aria-hidden="true">↓</span></a>
+          <a class="button secondary" href="#practice">先看日常</a>
+        </div>
+      </div>
+      <p class="hero-note" aria-hidden="true">YUNLIN → THE NEXT CHAPTER</p>
+      <span class="scene-index" aria-hidden="true">01 / 05</span>
+    </section>
+
+    <!-- 第二幕把家鄉當成故事起點，以路線圖與暖色圓日呈現南方印象。 -->
+    <section class="panel origin" id="origin" aria-labelledby="origin-title">
+      <div class="panel-inner">
+        <div class="reveal">
+          <p class="eyebrow">01 — Where it begins</p>
+          <h2 id="origin-title">從雲林，<br>帶著陽光出發。</h2>
+          <p class="copy">我是劉冠宏，來自雲林。南部熱情的陽光陪我長大，也讓我習慣用開朗的方式和人相處。新的城市、新的生活，就從這裡開始認識。</p>
+        </div>
+        <div class="origin-visual reveal">
+          <span class="origin-sun" aria-hidden="true"></span>
+          <svg class="origin-route" viewBox="0 0 580 420" role="img" aria-label="從雲林向北延伸的抽象旅程路線圖" xmlns="http://www.w3.org/2000/svg">
+            <path d="M78 340c112-8 43-128 171-131s87-95 204-95" fill="none" stroke="#101818" stroke-width="2" stroke-dasharray="5 8"/>
+            <circle cx="78" cy="340" r="11" fill="#e87558" stroke="#101818" stroke-width="2"/>
+            <circle cx="453" cy="114" r="11" fill="#d7ed69" stroke="#101818" stroke-width="2"/>
+            <path d="M453 114v-38m0 0-9 12m9-12 9 12" fill="none" stroke="#101818" stroke-width="2"/>
+            <path d="M30 380h520" stroke="#101818" stroke-width="1" opacity=".24"/>
+          </svg>
+          <span class="origin-label">起點：雲林</span>
+        </div>
+      </div>
+      <span class="scene-index" aria-hidden="true">02 / 05</span>
+    </section>
+
+    <!-- 第三幕用一句反差描述性格，讓「I 人」成為個人特色而非限制。 -->
+    <section class="panel personality" id="personality" aria-labelledby="personality-title">
+      <div class="panel-inner">
+        <div class="reveal">
+          <p class="eyebrow">02 — My own rhythm</p>
+          <h2 id="personality-title">安靜一點，<br>有趣很多。</h2>
+          <p class="copy">我其實是個 I 人，但熟了之後也很開朗、大方，偶爾還會冒出一些幽默感。喜歡先觀察，也很珍惜自在相處的時刻。</p>
+        </div>
+        <figure class="portrait-frame reveal">
+          <img src="人工智慧導論作業照片.jpg" alt="劉冠宏的個人照片">
+          <figcaption>劉冠宏 / 來自雲林</figcaption>
+        </figure>
+      </div>
+      <span class="scene-index" aria-hidden="true">03 / 05</span>
+    </section>
+
+    <!-- 第四幕讓醫學系、籃球與游泳並列，補上可感知的生活細節。 -->
+    <section class="panel practice" id="practice" aria-labelledby="practice-title">
+      <div class="panel-inner">
+        <div class="reveal">
+          <p class="eyebrow">03 — Between study & play</p>
+          <h2 id="practice-title">認真生活，<br>也認真上場。</h2>
+          <p class="copy">現在在醫學系學習。課本之外，最喜歡打籃球和游泳；有機會的話，也想加入系籃，認識一起流汗、一起笑的隊友。</p>
+          <div class="interest-list" aria-label="興趣">
+            <span>醫學系</span><span>籃球</span><span>游泳</span><span>麻將</span>
+          </div>
+        </div>
+        <div class="practice-art reveal">
+          <svg viewBox="0 0 520 470" role="img" aria-label="原創籃球插畫：球體、球場弧線與水波紋" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="285" cy="204" r="145" fill="#e87558"/>
+            <g fill="none" stroke="#101818" stroke-width="7" stroke-linecap="round">
+              <circle cx="285" cy="204" r="145"/>
+              <path d="M140 204h290M285 59c-38 42-58 91-58 145s20 103 58 145M285 59c38 42 58 91 58 145s-20 103-58 145M183 102c74 38 130 103 159 203M387 102c-74 38-130 103-159 203"/>
+            </g>
+            <path d="M49 381c31-20 62-20 93 0s62 20 93 0 62-20 93 0" fill="none" stroke="#39776e" stroke-width="5" stroke-linecap="round"/>
+            <path d="M92 416c31-20 62-20 93 0s62 20 93 0 62-20 93 0" fill="none" stroke="#39776e" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+            <circle cx="430" cy="82" r="12" fill="#d7ed69"/>
+          </svg>
+        </div>
+      </div>
+      <span class="scene-index" aria-hidden="true">04 / 05</span>
+    </section>
+
+    <!-- 最後一幕用邀請式文字收束個人故事，沒有虛構地址、證照或商業聯絡方式。 -->
+    <section class="panel outro" id="next" aria-labelledby="next-title">
+      <div class="panel-inner">
+        <div class="reveal">
+          <p class="eyebrow">04 — The next chapter</p>
+          <h2 id="next-title">下一場球，<br>希望有你。</h2>
+          <p class="copy">新的地方，慢慢熟悉；新的隊友，慢慢認識。這就是我正在寫的下一段故事。</p>
+        </div>
+        <a class="button reveal" href="#top">回到故事開場 <span class="arrow" aria-hidden="true">↑</span></a>
+      </div>
+      <span class="scene-index" aria-hidden="true">05 / 05</span>
+    </section>
+  </main>
+
+  <!-- 頁尾標明這是課堂虛構作品，避免被誤認為真實商業品牌。 -->
+  <footer class="site-footer">
+    <p>劉冠宏 / 個人故事練習</p>
+    <p>本網站為課堂練習作品，品牌為虛構。</p>
+  </footer>
+
+  <script>
+    // 手機選單支援點擊、Escape 關閉與選取章節後自動收合。
+    const menuButton = document.querySelector('.menu-toggle');
+    const navigation = document.querySelector('#site-navigation');
+
+    function setMenuOpen(isOpen) {
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? '關閉導覽選單' : '開啟導覽選單');
+      navigation.classList.toggle('open', isOpen);
+    }
+
+    menuButton.addEventListener('click', () => {
+      setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+    });
+    navigation.addEventListener('click', event => {
+      if (event.target.closest('a')) setMenuOpen(false);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    });
+
+    // 捲動時為導覽列加上淺色毛玻璃底，提升後續章節的文字辨識度。
+    const header = document.querySelector('.site-header');
+    function updateHeader() {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+
+    // IntersectionObserver 只觀察進場文字一次，避免持續監聽每次捲動。
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('show'));
+    }
+  </script>
+</body>
+</html>
